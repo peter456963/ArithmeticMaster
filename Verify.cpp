@@ -14,6 +14,14 @@ bool is_number(char c)
 
 int64_t read_integer(string str, int& index)
 {
+	bool is_negative = false;
+
+	if(str[index] == '-')
+	{
+		is_negative = true;
+		index++;
+	}
+
 	int64_t num = 0;
 	if (is_number(str[index]))
 	{
@@ -25,6 +33,11 @@ int64_t read_integer(string str, int& index)
 	else 
 	{
 		fprintf(stderr, "整数格式错误");
+	}
+
+	if(is_negative)
+	{
+		num = -num;
 	}
 
 	return num;
@@ -127,7 +140,7 @@ Expression * read_expression(string str, int index)
 	stack<string> ops;
 
 
-	while (str[index] != '\n' && str[index] != '\0')
+	while(str[index] != '\n' && str[index] != '\0')
 	{
 		if (is_number(str[index]))
 		{
@@ -198,6 +211,8 @@ bool verify_oneline(string problem_str, string answer_str)
 	problem_str.erase(remove(problem_str.begin(), problem_str.end(), ' '), problem_str.end());
 	answer_str.erase(remove(answer_str.begin(), answer_str.end(), ' '), answer_str.end());
 	int problem_str_index = 0, answer_str_index = 0;
+	// 去掉等于号
+	problem_str.erase(remove(problem_str.begin(),problem_str.end(),'='),problem_str.end());
 	// 跳转到内容最开始部分，即.后面
 	while (problem_str[problem_str_index++] != '.');
 	while (answer_str[answer_str_index++] != '.');

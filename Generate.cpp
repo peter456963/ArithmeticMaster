@@ -10,7 +10,7 @@ mt19937 generate_gen(generate_rd());
 
 Fraction generate_postive_number(int range) {
 	Fraction f;
-	const int64_t factor = 6;
+	const int64_t factor = 5;
 	uniform_int_distribution<int64_t> dis_int1(2,range * factor);
 	uniform_int_distribution<int> dis_int2(1,3);
 	f.denominator = dis_int1(generate_gen);
@@ -115,15 +115,36 @@ void generate_problems(int count,int range)
 		return;
 	}
 
+	vector<Expression *> exprs;
+
 	for(int i = 1; i <= count ;i++)
 	{
 		int op_count = 0;
+		
 		Expression * expr = generate_expression(op_count,range);
 
-		fprintf(exercises_file,"%d. %s\n",i,expression_toString(expr).c_str());
+		// 防止出现重复的题目
+		for(int j = 0; j < i - 1; j++)
+		{
+			if(expression_equals(exprs[j], expr))
+			{
+				expression_destroy(expr);
+				op_count = 0;
+				expr = generate_expression(op_count,range);
+				j = -1;
+			}
+		}
+
+		exprs.push_back(expr);
+
+		fprintf(exercises_file,"%d. %s =\n",i,expression_toString(expr).c_str());
 		fprintf(answer_file,"%d. %s\n",i,fraction_toString(expression_compute(expr)).c_str());
 
-		expression_destroy(expr);
+	}
+
+	for(int i = 0; i < count; i++) 
+	{
+		expression_destroy(exprs[i]);
 	}
 
 	fclose(exercises_file);

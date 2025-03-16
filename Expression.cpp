@@ -97,3 +97,25 @@ string expression_toString(Expression *expr) {
 
     return ss.str();
 }
+
+bool expression_equals(Expression *a,Expression *b)
+{
+	if(a->type != b->type)
+	{
+		return false;
+	}
+
+	if(a->type == EXPRESSION_TYPE_NUMBER)
+	{
+		return fraction_compare(a->number,b->number) == 0;
+	}
+	else if(a->type == EXPRESSION_TYPE_ADD || a->type == EXPRESSION_TYPE_MULTIPLY)
+	{
+		return (expression_equals(a->left,b->left) && expression_equals(a->right,b->right))
+			|| (expression_equals(a->left,b->right) && expression_equals(a->right,b->left));
+	}
+	else
+	{
+		return expression_equals(a->left,b->left) && expression_equals(a->right,b->right);
+	}
+}

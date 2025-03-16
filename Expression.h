@@ -25,5 +25,6 @@ Expression* expression_create();
 void expression_destroy(Expression* expr);
 Fraction expression_compute(Expression* expr);
 std::string expression_toString(Expression* expr);
+bool expression_equals(Expression *a,Expression *b);
 
 #endif

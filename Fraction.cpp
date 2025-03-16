@@ -17,6 +17,12 @@ void fraction_simplify(Fraction * f) {
 	int64_t common = gcd(abs(f->numerator), abs(f->denominator));
     f->numerator /= common;
     f->denominator /= common;
+
+	if(f->numerator < 0 && f->denominator < 0)
+	{
+		f->numerator = -f->numerator;
+		f->denominator = -f->denominator;
+	}
 }
 
 Fraction fraction_add(Fraction a, Fraction b) {

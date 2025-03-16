@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Build|x64'">
-    <LocalDebuggerCommandArguments>-n 10000 -r 10</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-n 30000 -r 100</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
